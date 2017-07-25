@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.hemmerling.aufgabe01e_personenverwaltung_v3.model.persistence;
+package com.hemmerling.aufgabe01f_personenverwaltung_v4.model.persistence;
 
 import java.util.Objects;
 

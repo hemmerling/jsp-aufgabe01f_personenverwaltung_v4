@@ -3,14 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.hemmerling.aufgabe01e_personenverwaltung_v3.model.business;
+package com.hemmerling.aufgabe01f_personenverwaltung_v4.model.business;
 
 import java.io.IOException;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import com.hemmerling.aufgabe01e_personenverwaltung_v3.model.persistence.Person;
+import com.hemmerling.aufgabe01f_personenverwaltung_v4.model.persistence.Person;
 
 /**
  *
