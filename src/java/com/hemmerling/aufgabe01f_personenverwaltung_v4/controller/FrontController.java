@@ -10,7 +10,11 @@ import com.hemmerling.aufgabe01f_personenverwaltung_v4.model.business.Action;
 import com.hemmerling.aufgabe01f_personenverwaltung_v4.model.business.PersonSaveAction;
 import com.hemmerling.aufgabe01f_personenverwaltung_v4.model.business.PersonDeleteAction;
 import com.hemmerling.aufgabe01f_personenverwaltung_v4.model.business.PersonService;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
 import java.util.Enumeration;
 import java.util.Iterator;
@@ -27,7 +31,11 @@ import java.util.Properties;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.servlet.ServletConfig;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.lang.*;
 /**
  *
  * @author Administrator
@@ -45,8 +53,11 @@ public class FrontController extends HttpServlet {
     private static final String STARTPAGE = "index.jsp";
     private static final String CREATEPAGE = "create.jsp";
     private static final String VIEWPAGE = "view.jsp";
-
+    
     private static final String PERSONS = "persons";
+
+    private static final String MYAPP = "myapp";   
+    private static String myappPath = "hello";
 
     private static Properties actionMap = new Properties();
 
@@ -62,6 +73,7 @@ public class FrontController extends HttpServlet {
                 "com.hemmerling.aufgabe01f_personenverwaltung_v4.model.business.PersonDeleteAction");
         actionMap.setProperty(FrontController.SET,
                 "com.hemmerling.aufgabe01f_personenverwaltung_v4.model.business.PersonSetAction");
+    
     }
 
     /**
@@ -84,6 +96,8 @@ public class FrontController extends HttpServlet {
         Object obj = session.getAttribute(PERSONS);
         List<String[]> persons = personService.get();
         session.setAttribute(PERSONS, persons);
+        
+        session.setAttribute(MYAPP, myappPath);
 
         String todo = request.getParameter(ACTION);
 
@@ -92,6 +106,51 @@ public class FrontController extends HttpServlet {
             Action action = (Action) Class.forName(className).newInstance();
             action.execute(request, response);
         }
+    }
+    
+    public void init(ServletConfig config) throws ServletException {
+        super.init(config);
+        myappPath = getServletContext().getInitParameter("myapp");
+
+        Properties prop = new Properties();
+        
+        String fileName = "myapp.properties";
+                //getServletContext().getInitParameter("myapp");
+        //InputStream input = getServletContext().getResourceAsStream(fileName);        
+        InputStream input = this.getClass().getClassLoader().getResourceAsStream("/myapp.properties");
+        try {
+		prop.load(input);
+                Enumeration enum2;
+                enum2 = prop.propertyNames();
+                myappPath = "";
+                while (enum2.hasMoreElements()){
+                    myappPath += enum2.nextElement().toString();
+                }   
+                myappPath += prop.getProperty(FrontController.UPDATE);
+                
+                // get the property value and print it out
+//		actionMap.setProperty(FrontController.UPDATE, 
+//                                      prop.getProperty(FrontController.UPDATE));
+//                actionMap.setProperty(FrontController.CREATE,
+//                                      prop.getProperty(FrontController.CREATE));
+//                actionMap.setProperty(FrontController.VIEW,
+//                                      prop.getProperty(FrontController.VIEW));
+//                actionMap.setProperty(FrontController.DELETE,
+//                                      prop.getProperty(FrontController.DELETE));
+//                actionMap.setProperty(FrontController.SET,
+//                                      prop.getProperty(FrontController.SET));
+
+	} catch (IOException ex) {
+		ex.printStackTrace();
+	} finally {
+		if (input != null) {
+			try {
+				input.close();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
     }
 
 // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

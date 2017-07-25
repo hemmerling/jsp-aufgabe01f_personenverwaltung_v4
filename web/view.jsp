@@ -16,7 +16,17 @@
     <body>
         <jsp:include page = "header.jsp" />
         <h1>Personenliste</h1>
+
+        <%@ page import = "java.util.ResourceBundle" %>
+        <% ResourceBundle resource = ResourceBundle.getBundle("myapp");
+           String updateName=resource.getString("UPDATE");%>
+        <%=updateName %>
         <%
+            String myappPath = (String) session.getAttribute("myapp");          
+            out.println("<hr>");
+            out.println(myappPath);
+            out.println("<hr>");
+    
             List<String[]> persons = (ArrayList<String[]>) session.getAttribute("persons");
             if (persons == null /* || items.isEmpty() */) {
         %>
