@@ -88,7 +88,6 @@ public class FrontController extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, ClassNotFoundException,
             InstantiationException, IllegalAccessException {
-        String nextPage = STARTPAGE;
         response.setContentType("text/html;charset=UTF-8");
 
         HttpSession session = request.getSession();

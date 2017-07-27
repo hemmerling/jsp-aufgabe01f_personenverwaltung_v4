@@ -19,7 +19,7 @@
 
         <%@ page import = "java.util.ResourceBundle" %>
         <% ResourceBundle resource = ResourceBundle.getBundle("myapp");
-           String updateName=resource.getString("UPDATE");%>
+           String updateName=resource.getString("update");%>
         <%=updateName %>
         <%
             String myappPath = (String) session.getAttribute("myapp");          
